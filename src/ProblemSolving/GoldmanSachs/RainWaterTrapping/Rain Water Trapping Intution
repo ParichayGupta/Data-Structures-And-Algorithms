@@ -1,0 +1,131 @@
+Rain Water Trapping
+
+Brute Force
+
+- for each cell, check if it can trap water
+- if it can, calculate the amount of water it can trap
+    - To calculate the amount of water a cell can trap,
+    we need to find the maximum height of the left and right walls.
+    - The amount of water a cell can trap is the minimum of the two
+    heights minus the height of the cell.
+        - To find the maximum height of the left and right walls,
+        we need to iterate the array twice.
+        - In the first iteration, we find the maximum height of the left wall for each cell.
+        - In the second iteration, we find the maximum height of the right wall for each cell.
+        - Then, we calculate the amount of water each cell can trap.
+    - Finally, we add the amount of water each cell can trap to the total amount of water trapped.
+- add the amount of water to the total
+- return the total
+
+```Java
+
+public int trap(int[] height) {
+    int total = 0;
+    for (int i = 0; i < height.length; i++) {
+        int leftMax = 0;
+        int rightMax = 0;
+        for (int j = i; j >= 0; j--) {
+            leftMax = Math.max(leftMax, height[j]);
+        }
+        for (int j = i; j < height.length; j++) {
+            rightMax = Math.max(rightMax, height[j]);
+        }
+        total += Math.min(leftMax, rightMax) - height[i];
+    }
+    return total;
+}
+
+- Time complexity : O(n^2)
+- Space complexity : O(1)
+
+
+==========================================================================================
+
+Better Approach: Calculating the left and right walls in advance using Prefix Sum and Suffix Sum
+
+- Instead of calculating the left and right walls for each cell every time,
+we can calculate them in advance.
+- We can use two arrays to store the maximum height of the left and right walls for each cell.
+- The leftMax array stores the maximum height of the left wall for each cell.
+- The rightMax array stores the maximum height of the right wall for each cell.
+- Then, we calculate the amount of water each cell can trap.
+- Finally, we add the amount of water each cell can trap to the total amount of water trapped.
+- add the amount of water to the total
+- return the total
+
+```Java
+
+public int trap(int[] height) {
+    if (height.length == 0) {
+        return 0;
+    }
+    int total = 0;
+    int[] leftMax = new int[height.length];
+    int[] rightMax = new int[height.length];
+    leftMax[0] = height[0];
+    for (int i = 1; i < height.length; i++) {
+        leftMax[i] = Math.max(leftMax[i - 1], height[i]);
+    }
+    rightMax[height.length - 1] = height[height.length - 1];
+    for (int i = height.length - 2; i >= 0; i--) {
+        rightMax[i] = Math.max(rightMax[i + 1], height[i]);
+    }
+    for (int i = 0; i < height.length; i++) {
+        total += Math.min(leftMax[i], rightMax[i]) - height[i];
+    }
+    return total;
+}
+
+- Time complexity : O(n)
+- Space complexity : O(n)
+
+============================================================================================
+
+Optimal Approach: Using Two Pointers
+
+- Instead of calculating the left and right walls in advance, we can use two pointers to calculate them on the fly.
+- We can use two pointers, left and right, to traverse the array.
+- We initialize left to 0 and right to height.length - 1.
+- We also initialize leftMax and rightMax to 0.
+- Then, we iterate the array until left < right.
+- If height[left] < height[right], we compare height[left] with leftMax.
+    - If height[left] is less than leftMax, we calculate the amount of water the left cell can trap.
+    - Otherwise, we update leftMax.
+    - We increment left by 1.
+- If height[left] >= height[right], we compare height[right] with rightMax.
+    - If height[right] is less than rightMax, we calculate the amount of water the right cell can trap.
+    - Otherwise, we update rightMax.
+    - We decrement right by 1.
+- Finally, we return the total amount of water trapped.
+
+```Java
+
+public int trap(int[] height) {
+    int left = 0;
+    int right = height.length - 1;
+    int leftMax = 0;
+    int rightMax = 0;
+    int total = 0;
+    while (left < right) {
+        if (height[left] < height[right]) {
+            if (height[left] < leftMax) {
+                total += leftMax - height[left];
+            } else {
+                leftMax = height[left];
+            }
+            left++;
+        } else {
+            if (height[right] < rightMax) {
+                total += rightMax - height[right];
+            } else {
+                rightMax = height[right];
+            }
+            right--;
+        }
+    }
+    return total;
+}
+
+- Time complexity : O(n)
+- Space complexity : O(1)
+
