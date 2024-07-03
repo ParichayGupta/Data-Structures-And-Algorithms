@@ -1,6 +1,6 @@
 package ProblemSolving.DSASheet.Greedy;
 
-public class Lemonade {
+public class LemonadeChange {
 
     /**
      * At a lemonade stand, each lemonade costs $5. Customers are standing in a queue to
