@@ -1,4 +1,4 @@
-package ProblemSolving;
+package ProblemSolving.DSASheet.Greedy;
 
 public class MinimumJumpsToEnd {
     public static int minJumps(int[] arr) {
