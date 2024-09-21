@@ -1,4 +1,4 @@
-package ProblemSolving;
+package ProblemSolving.MockWithMohan;
 
 public class MinimumNumberOfSubstitutionsRequired {
 

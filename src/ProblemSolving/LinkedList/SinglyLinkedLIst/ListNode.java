@@ -1,4 +1,4 @@
-package ProblemSolving.LinkedList.SinglyLinkedLIst;
+package ProblemSolving.LinkedList.SinglyLinkedList;
 
 public class ListNode<T> {
 
